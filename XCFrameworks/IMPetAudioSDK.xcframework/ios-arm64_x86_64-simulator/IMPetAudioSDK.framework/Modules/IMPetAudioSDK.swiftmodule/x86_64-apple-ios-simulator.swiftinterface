@@ -1,0 +1,340 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.4.2 effective-5.10 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)
+// swift-module-flags: -target x86_64-apple-ios15.0-simulator -enable-objc-interop -enable-library-evolution -language-mode 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name IMPetAudioSDK
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.4.2
+import Accelerate
+import CryptoKit
+import Foundation
+import Swift
+import TensorFlowLite
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+public enum PetAudioContract {
+  public static let sampleRateHz: Swift::Int
+  public static let channels: Swift::Int
+  public static let featureSchemaVersion: Swift::Int
+}
+public enum PetType : Swift::String, Swift::Codable, Swift::Sendable {
+  case cat
+  case dog
+  public init?(rawValue: Swift::String)
+  public typealias RawValue = Swift::String
+  public var rawValue: Swift::String {
+    get
+  }
+}
+public enum PetSoundType : Swift::String, Swift::Codable, Swift::Sendable {
+  case meow, purr, hiss, caterwaul
+  case bark, yip, howl, bowWow
+  case growling, whimper, animalOther
+  public init?(rawValue: Swift::String)
+  public typealias RawValue = Swift::String
+  public var rawValue: Swift::String {
+    get
+  }
+}
+public struct PetLabelScore : Swift::Codable, Swift::Equatable, Swift::Sendable {
+  public let label: Swift::String
+  public let score: Swift::Float
+  public static func == (a: IMPetAudioSDK::PetLabelScore, b: IMPetAudioSDK::PetLabelScore) -> Swift::Bool
+  public func encode(to encoder: any Swift::Encoder) throws
+  public init(from decoder: any Swift::Decoder) throws
+}
+public enum SignalQuality : Swift::String, Swift::Codable, Swift::Sendable {
+  case poor, fair, good
+  public init?(rawValue: Swift::String)
+  public typealias RawValue = Swift::String
+  public var rawValue: Swift::String {
+    get
+  }
+}
+public enum LoudnessBand : Swift::String, Swift::Codable, Swift::Sendable {
+  case low, medium, high
+  public init?(rawValue: Swift::String)
+  public typealias RawValue = Swift::String
+  public var rawValue: Swift::String {
+    get
+  }
+}
+public enum BurstDensity : Swift::String, Swift::Codable, Swift::Sendable {
+  case low, medium, high
+  public init?(rawValue: Swift::String)
+  public typealias RawValue = Swift::String
+  public var rawValue: Swift::String {
+    get
+  }
+}
+public enum LoudnessStyle : Swift::String, Swift::Codable, Swift::Sendable {
+  case loud, soft
+  public init?(rawValue: Swift::String)
+  public typealias RawValue = Swift::String
+  public var rawValue: Swift::String {
+    get
+  }
+}
+public enum DurationStyle : Swift::String, Swift::Codable, Swift::Sendable {
+  case short, long
+  public init?(rawValue: Swift::String)
+  public typealias RawValue = Swift::String
+  public var rawValue: Swift::String {
+    get
+  }
+}
+public enum ContinuityStyle : Swift::String, Swift::Codable, Swift::Sendable {
+  case continuous, intermittent
+  public init?(rawValue: Swift::String)
+  public typealias RawValue = Swift::String
+  public var rawValue: Swift::String {
+    get
+  }
+}
+public enum EnergyStyle : Swift::String, Swift::Codable, Swift::Sendable {
+  case steady, variable
+  public init?(rawValue: Swift::String)
+  public typealias RawValue = Swift::String
+  public var rawValue: Swift::String {
+    get
+  }
+}
+public enum TimbreStyle : Swift::String, Swift::Codable, Swift::Sendable {
+  case bright, lowHeavy
+  public init?(rawValue: Swift::String)
+  public typealias RawValue = Swift::String
+  public var rawValue: Swift::String {
+    get
+  }
+}
+public struct AcousticMetrics : Swift::Codable, Swift::Sendable {
+  public let durationMs: Swift::Int64
+  public let globalRms: Swift::Double
+  public let peak: Swift::Double
+  public let crestFactor: Swift::Double
+  public let frameRmsMean: Swift::Double
+  public let frameRmsStd: Swift::Double
+  public let frameRmsMax: Swift::Double
+  public let quietFrameRatio: Swift::Double
+  public let zeroCrossingRateMean: Swift::Double
+  public let zeroCrossingRateStd: Swift::Double
+  public let spectralCentroidMeanHz: Swift::Double
+  public let spectralCentroidStdHz: Swift::Double
+  public let spectralBandwidthMeanHz: Swift::Double
+  public let spectralRolloff85MeanHz: Swift::Double
+  public let spectralFlatnessMean: Swift::Double
+  public let spectralEntropyMean: Swift::Double
+  public let lowBandEnergyRatio: Swift::Double
+  public let midBandEnergyRatio: Swift::Double
+  public let highBandEnergyRatio: Swift::Double
+  public let dominantFrequencyHz: Swift::Double
+  public let burstCount: Swift::Int
+  public let burstRatePerSecond: Swift::Double
+  public let clippedSampleRatio: Swift::Double
+  public let loudnessBand: IMPetAudioSDK::LoudnessBand
+  public let burstDensity: IMPetAudioSDK::BurstDensity
+  public let signalQuality: IMPetAudioSDK::SignalQuality
+  public func encode(to encoder: any Swift::Encoder) throws
+  public init(from decoder: any Swift::Decoder) throws
+}
+public struct PetStyleHints : Swift::Codable, Swift::Sendable {
+  public let loudness: IMPetAudioSDK::LoudnessStyle
+  public let duration: IMPetAudioSDK::DurationStyle
+  public let continuity: IMPetAudioSDK::ContinuityStyle
+  public let energy: IMPetAudioSDK::EnergyStyle
+  public let timbre: IMPetAudioSDK::TimbreStyle
+  public let provisionalBins: Swift::Bool
+  public func encode(to encoder: any Swift::Encoder) throws
+  public init(from decoder: any Swift::Decoder) throws
+}
+public enum DiagnosticCode : Swift::String, Swift::Codable, Swift::Hashable, Swift::Sendable {
+  case petSoundDetected
+  case noPetSound
+  case poorSignalQuality
+  case usingBundledConfig
+  case usingAppliedConfig
+  case styleBinsProvisional
+  public init?(rawValue: Swift::String)
+  public typealias RawValue = Swift::String
+  public var rawValue: Swift::String {
+    get
+  }
+}
+public enum PetMeaningLevel : Swift::String, Swift::Codable, Swift::Sendable {
+  case fine, coarse, unknown
+  public init?(rawValue: Swift::String)
+  public typealias RawValue = Swift::String
+  public var rawValue: Swift::String {
+    get
+  }
+}
+public struct PetMeaningScore : Swift::Codable, Swift::Sendable {
+  public let code: Swift::String
+  public let score: Swift::Float
+  public func encode(to encoder: any Swift::Encoder) throws
+  public init(from decoder: any Swift::Decoder) throws
+}
+public struct PetMeaningResult : Swift::Codable, Swift::Sendable {
+  public let meaningLevel: IMPetAudioSDK::PetMeaningLevel
+  public let meaningCode: Swift::String
+  public let meaningConfidence: Swift::Float
+  public let fineTop1: IMPetAudioSDK::PetMeaningScore?
+  public let fineTop2: IMPetAudioSDK::PetMeaningScore?
+  public let coarseTop1: IMPetAudioSDK::PetMeaningScore?
+  public let classifierVersion: Swift::String
+  public func encode(to encoder: any Swift::Encoder) throws
+  public init(from decoder: any Swift::Decoder) throws
+}
+public struct PetAudioResult : Swift::Codable, Swift::Sendable {
+  public let modelVersion: Swift::String
+  public let configFileName: Swift::String?
+  public let releaseRevision: Swift::Int64
+  public let configVersion: Swift::String
+  public let configSha256: Swift::String
+  public let configSchemaVersion: Swift::Int
+  public let classifierVersion: Swift::String
+  public let featureSchemaVersion: Swift::Int
+  public let isPetSound: Swift::Bool
+  public let petType: IMPetAudioSDK::PetType?
+  public let petSoundType: IMPetAudioSDK::PetSoundType?
+  public let detectorConfidence: Swift::Float
+  public let analyzedStartMs: Swift::Int64
+  public let analyzedEndMs: Swift::Int64
+  public let detectedLabels: [IMPetAudioSDK::PetLabelScore]
+  public let metrics: IMPetAudioSDK::AcousticMetrics
+  public let styleHints: IMPetAudioSDK::PetStyleHints
+  public let meaning: IMPetAudioSDK::PetMeaningResult
+  public let diagnostics: Swift::Set<IMPetAudioSDK::DiagnosticCode>
+  public let inferenceTimeMs: Swift::Int64
+  public func encode(to encoder: any Swift::Encoder) throws
+  public init(from decoder: any Swift::Decoder) throws
+}
+public enum ConfigSource : Swift::String, Swift::Codable, Swift::Sendable {
+  case bundled, applied
+  public init?(rawValue: Swift::String)
+  public typealias RawValue = Swift::String
+  public var rawValue: Swift::String {
+    get
+  }
+}
+public struct PetAudioRuntimeInfo : Swift::Codable, Swift::Sendable {
+  public let modelId: Swift::String
+  public let modelSha256: Swift::String
+  public let modelVersion: Swift::String
+  public let configFileName: Swift::String?
+  public let releaseRevision: Swift::Int64
+  public let configVersion: Swift::String
+  public let configSha256: Swift::String
+  public let configSource: IMPetAudioSDK::ConfigSource
+  public let configSchemaVersion: Swift::Int
+  public let featureSchemaVersion: Swift::Int
+  public let classifierVersion: Swift::String
+  public func encode(to encoder: any Swift::Encoder) throws
+  public init(from decoder: any Swift::Decoder) throws
+}
+public enum ConfigErrorCode : Swift::String, Swift::Codable, Swift::Sendable {
+  case fileNotFound, fileTooLarge, readFailed
+  case malformedJSON, unsupportedSchema
+  case invalidConfigVersion, invalidReleaseRevision
+  case invalidConfigFileName, configIntegrityMismatch
+  case incompatibleModel, incompatibleFeatureSchema
+  case invalidClassifier, invalidAudioContract
+  case invalidParameterRange, invalidParameterOrder
+  public init?(rawValue: Swift::String)
+  public typealias RawValue = Swift::String
+  public var rawValue: Swift::String {
+    get
+  }
+}
+public struct ConfigApplyResult : Swift::Codable, Swift::Sendable {
+  public let success: Swift::Bool
+  public let activeConfigVersion: Swift::String
+  public let activeReleaseRevision: Swift::Int64
+  public let activeConfigFileName: Swift::String?
+  public let activeConfigSha256: Swift::String
+  public let attemptedConfigVersion: Swift::String?
+  public let attemptedReleaseRevision: Swift::Int64?
+  public let errorCode: IMPetAudioSDK::ConfigErrorCode?
+  public let errorMessage: Swift::String?
+  public func encode(to encoder: any Swift::Encoder) throws
+  public init(from decoder: any Swift::Decoder) throws
+}
+public enum PetAudioErrorCode : Swift::String, Swift::Sendable {
+  case sdkClosed, emptyPCM
+  case unsupportedSampleRate, unsupportedChannels
+  case clipTooLong, modelInitFailed
+  case modelInferenceFailed
+  public init?(rawValue: Swift::String)
+  public typealias RawValue = Swift::String
+  public var rawValue: Swift::String {
+    get
+  }
+}
+public struct PetAudioError : Swift::Error, Foundation::LocalizedError, Swift::Sendable {
+  public let code: IMPetAudioSDK::PetAudioErrorCode
+  public let message: Swift::String
+  public var errorDescription: Swift::String? {
+    get
+  }
+  public init(code: IMPetAudioSDK::PetAudioErrorCode, message: Swift::String)
+}
+public struct PetAudioReportingConfiguration {
+  public let baseURL: Foundation::URL
+  public let accessTokenProvider: @Sendable () -> Swift::String?
+  public let timeoutSeconds: Foundation::TimeInterval
+  public let maxPendingEvents: Swift::Int
+  public let maxPendingAgeDays: Swift::Int
+  public init(baseURL: Foundation::URL, timeoutSeconds: Foundation::TimeInterval = 5, maxPendingEvents: Swift::Int = 100, maxPendingAgeDays: Swift::Int = 7, accessTokenProvider: @escaping @Sendable () -> Swift::String?)
+}
+final public class PetAudioSDK {
+  public init(reportingConfiguration: IMPetAudioSDK::PetAudioReportingConfiguration? = nil) throws
+  final public func applyConfig(fileURL: Foundation::URL) -> IMPetAudioSDK::ConfigApplyResult
+  final public func applyConfig(data: Foundation::Data) -> IMPetAudioSDK::ConfigApplyResult
+  final public func resetToBundledConfig() throws
+  final public func runtimeInfo() throws -> IMPetAudioSDK::PetAudioRuntimeInfo
+  final public func analyzeClip(pcm: [Swift::Int16], sampleRateHz: Swift::Int = PetAudioContract.sampleRateHz, channels: Swift::Int = PetAudioContract.channels) throws -> IMPetAudioSDK::PetAudioResult
+  final public func fineMeaning(pcm: [Swift::Int16], sampleRateHz: Swift::Int = PetAudioContract.sampleRateHz, channels: Swift::Int = PetAudioContract.channels) throws -> IMPetAudioSDK::PetMeaningResult
+  final public func close()
+  @objc deinit
+}
+extension IMPetAudioSDK::PetType : Swift::Equatable {}
+extension IMPetAudioSDK::PetType : Swift::Hashable {}
+extension IMPetAudioSDK::PetType : Swift::RawRepresentable {}
+extension IMPetAudioSDK::PetSoundType : Swift::Equatable {}
+extension IMPetAudioSDK::PetSoundType : Swift::Hashable {}
+extension IMPetAudioSDK::PetSoundType : Swift::RawRepresentable {}
+extension IMPetAudioSDK::SignalQuality : Swift::Equatable {}
+extension IMPetAudioSDK::SignalQuality : Swift::Hashable {}
+extension IMPetAudioSDK::SignalQuality : Swift::RawRepresentable {}
+extension IMPetAudioSDK::LoudnessBand : Swift::Equatable {}
+extension IMPetAudioSDK::LoudnessBand : Swift::Hashable {}
+extension IMPetAudioSDK::LoudnessBand : Swift::RawRepresentable {}
+extension IMPetAudioSDK::BurstDensity : Swift::Equatable {}
+extension IMPetAudioSDK::BurstDensity : Swift::Hashable {}
+extension IMPetAudioSDK::BurstDensity : Swift::RawRepresentable {}
+extension IMPetAudioSDK::LoudnessStyle : Swift::Equatable {}
+extension IMPetAudioSDK::LoudnessStyle : Swift::Hashable {}
+extension IMPetAudioSDK::LoudnessStyle : Swift::RawRepresentable {}
+extension IMPetAudioSDK::DurationStyle : Swift::Equatable {}
+extension IMPetAudioSDK::DurationStyle : Swift::Hashable {}
+extension IMPetAudioSDK::DurationStyle : Swift::RawRepresentable {}
+extension IMPetAudioSDK::ContinuityStyle : Swift::Equatable {}
+extension IMPetAudioSDK::ContinuityStyle : Swift::Hashable {}
+extension IMPetAudioSDK::ContinuityStyle : Swift::RawRepresentable {}
+extension IMPetAudioSDK::EnergyStyle : Swift::Equatable {}
+extension IMPetAudioSDK::EnergyStyle : Swift::Hashable {}
+extension IMPetAudioSDK::EnergyStyle : Swift::RawRepresentable {}
+extension IMPetAudioSDK::TimbreStyle : Swift::Equatable {}
+extension IMPetAudioSDK::TimbreStyle : Swift::Hashable {}
+extension IMPetAudioSDK::TimbreStyle : Swift::RawRepresentable {}
+extension IMPetAudioSDK::DiagnosticCode : Swift::RawRepresentable {}
+extension IMPetAudioSDK::PetMeaningLevel : Swift::Equatable {}
+extension IMPetAudioSDK::PetMeaningLevel : Swift::Hashable {}
+extension IMPetAudioSDK::PetMeaningLevel : Swift::RawRepresentable {}
+extension IMPetAudioSDK::ConfigSource : Swift::Equatable {}
+extension IMPetAudioSDK::ConfigSource : Swift::Hashable {}
+extension IMPetAudioSDK::ConfigSource : Swift::RawRepresentable {}
+extension IMPetAudioSDK::ConfigErrorCode : Swift::Equatable {}
+extension IMPetAudioSDK::ConfigErrorCode : Swift::Hashable {}
+extension IMPetAudioSDK::ConfigErrorCode : Swift::RawRepresentable {}
+extension IMPetAudioSDK::PetAudioErrorCode : Swift::Equatable {}
+extension IMPetAudioSDK::PetAudioErrorCode : Swift::Hashable {}
+extension IMPetAudioSDK::PetAudioErrorCode : Swift::RawRepresentable {}
